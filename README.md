@@ -1,4 +1,4 @@
-# TWIN Tracing
+# 3Sixty Tracing
 
 This repository provides reusable distributed-tracing building blocks for applications and services across the TWIN ecosystem. The packages are designed to work together so teams can model traces and spans consistently, persist them to different destinations, and expose or consume tracing capabilities through service interfaces.
 
@@ -13,7 +13,12 @@ The model interfaces align to OpenTelemetry span concepts: a trace represents th
 - [tracing-service](packages/tracing-service/README.md) - Exposes tracing operations through service routes and API contracts for server-side integration.
 - [tracing-rest-client](packages/tracing-rest-client/README.md) - Provides a client for interacting with tracing service endpoints from applications and services.
 - [tracing-processors](packages/tracing-processors/README.md) - Traces the HTTP boundary, recording spans for inbound routes and outbound REST requests and carrying the trace between services.
+- [tracing-facades](packages/tracing-facades/README.md) - Applies tracing to factory produced components using a facade, without modifying them.
 
 ## Contributing
 
 To contribute to this package see the guidelines for building and publishing in [CONTRIBUTING](./CONTRIBUTING.md)
+
+## Origin
+
+This repository is derived from the original [iotaledger/twin-tracing](https://github.com/iotaledger/twin-tracing) repository.

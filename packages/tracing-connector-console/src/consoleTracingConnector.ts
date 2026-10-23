@@ -1,7 +1,7 @@
 // Copyright 2026 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import { Guards, Is, ObjectHelper } from "@twin.org/core";
-import { nameof } from "@twin.org/nameof";
+import { Guards, Is, ObjectHelper } from "@3sixty/core";
+import { nameof } from "@3sixty/nameof";
 import {
 	SpanAttributes,
 	SpanHelper,
@@ -10,7 +10,7 @@ import {
 	type ISpan,
 	type ISpanOptions,
 	type ITracingConnector
-} from "@twin.org/tracing-models";
+} from "@3sixty/tracing-models";
 import type { IConsoleTracingConnectorConstructorOptions } from "./models/IConsoleTracingConnectorConstructorOptions.js";
 
 /**
@@ -54,12 +54,19 @@ export class ConsoleTracingConnector implements ITracingConnector {
 	private readonly _includeIds: boolean;
 
 	/**
+	 * Disable colour in the output.
+	 * @internal
+	 */
+	private readonly _disableColor: boolean;
+
+	/**
 	 * Create a new instance of ConsoleTracingConnector.
 	 * @param options The options for the tracing connector.
 	 */
 	constructor(options?: IConsoleTracingConnectorConstructorOptions) {
 		this._kinds = options?.config?.kinds ?? Object.values(SpanKind);
 		this._includeIds = options?.config?.includeIds ?? false;
+		this._disableColor = options?.config?.disableColor ?? false;
 	}
 
 	/**
@@ -162,20 +169,25 @@ export class ConsoleTracingConnector implements ITracingConnector {
 			if (hasMessage) {
 				params.push(this.colorize(message, "red"));
 			}
+			// eslint-disable-next-line no-restricted-syntax
 			globalThis.console.error(...params);
 		} else {
+			// eslint-disable-next-line no-restricted-syntax
 			globalThis.console.log(...params);
 		}
 	}
 
 	/**
-	 * Add color to a string.
+	 * Add color to a string, unless colour is disabled.
 	 * @param message The string to colorize.
 	 * @param color The color to use.
 	 * @returns The colorized string.
 	 * @internal
 	 */
 	private colorize(message: string, color: "blue" | "cyan" | "green" | "magenta" | "red"): string {
+		if (this._disableColor) {
+			return message;
+		}
 		// eslint-disable-next-line unicorn/escape-case
 		return `\x1b[${ConsoleTracingConnector._COLORS[color]}m${message}\x1b[39m`;
 	}

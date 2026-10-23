@@ -1,11 +1,11 @@
-# TWIN Tracing Service
+# 3Sixty Tracing Service
 
 Exposes tracing operations through service routes and API contracts for server-side integration.
 
 ## Installation
 
 ```shell
-npm install @twin.org/tracing-service
+npm install @3sixty/tracing-service
 ```
 
 ## Examples
@@ -19,3 +19,7 @@ Detailed reference documentation for the API can be found in [docs/reference/ind
 ## Changelog
 
 The changes between each version can be found in [docs/changelog.md](docs/changelog.md)
+
+## Origin
+
+This package is derived from the original [iotaledger/twin-tracing](https://github.com/iotaledger/twin-tracing/tree/next/packages/tracing-service) repository.

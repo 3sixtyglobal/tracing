@@ -1,7 +1,7 @@
 // Copyright 2026 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import { entity, property, SortDirection } from "@twin.org/entity";
-import type { SpanKind, SpanStatus } from "@twin.org/tracing-models";
+import { entity, property, SortDirection } from "@3sixty/entity";
+import type { SpanKind, SpanStatus } from "@3sixty/tracing-models";
 import type { SpanEvent } from "./spanEvent.js";
 import type { SpanLink } from "./spanLink.js";
 
@@ -13,37 +13,37 @@ export class Span {
 	/**
 	 * The id of the span, used as the primary key.
 	 */
-	@property({ type: "string", isPrimary: true })
+	@property({ type: "string", isPrimary: true, maxLength: 255 })
 	public spanId!: string;
 
 	/**
 	 * The id of the trace the span belongs to.
 	 */
-	@property({ type: "string", isSecondary: true })
+	@property({ type: "string", maxLength: 255, isSecondary: true })
 	public traceId!: string;
 
 	/**
 	 * The id of the parent span, when the span is not the root of the trace.
 	 */
-	@property({ type: "string", optional: true })
+	@property({ type: "string", maxLength: 255, optional: true })
 	public parentSpanId?: string;
 
 	/**
 	 * The name of the span.
 	 */
-	@property({ type: "string" })
+	@property({ type: "string", maxLength: 256 })
 	public name!: string;
 
 	/**
 	 * The kind of the span.
 	 */
-	@property({ type: "string", isSecondary: true })
+	@property({ type: "string", maxLength: 16, isSecondary: true })
 	public kind!: SpanKind;
 
 	/**
 	 * The status of the span.
 	 */
-	@property({ type: "string", isSecondary: true })
+	@property({ type: "string", maxLength: 16, isSecondary: true })
 	public status!: SpanStatus;
 
 	/**

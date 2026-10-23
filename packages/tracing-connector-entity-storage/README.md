@@ -1,11 +1,11 @@
-# TWIN Tracing Connector Entity Storage
+# 3Sixty Tracing Connector Entity Storage
 
 Persists spans to entity storage for durable retention, querying, and downstream processing.
 
 ## Installation
 
 ```shell
-npm install @twin.org/tracing-connector-entity-storage
+npm install @3sixty/tracing-connector-entity-storage
 ```
 
 ## Examples
@@ -19,3 +19,7 @@ Detailed reference documentation for the API can be found in [docs/reference/ind
 ## Changelog
 
 The changes between each version can be found in [docs/changelog.md](docs/changelog.md)
+
+## Origin
+
+This package is derived from the original [iotaledger/twin-tracing](https://github.com/iotaledger/twin-tracing/tree/next/packages/tracing-connector-entity-storage) repository.

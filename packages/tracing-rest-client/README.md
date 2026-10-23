@@ -1,11 +1,11 @@
-# TWIN Tracing Rest Client
+# 3Sixty Tracing Rest Client
 
 Provides a client for interacting with tracing service endpoints from applications and services.
 
 ## Installation
 
 ```shell
-npm install @twin.org/tracing-rest-client
+npm install @3sixty/tracing-rest-client
 ```
 
 ## Examples
@@ -19,3 +19,7 @@ Detailed reference documentation for the API can be found in [docs/reference/ind
 ## Changelog
 
 The changes between each version can be found in [docs/changelog.md](docs/changelog.md)
+
+## Origin
+
+This package is derived from the original [iotaledger/twin-tracing](https://github.com/iotaledger/twin-tracing/tree/next/packages/tracing-rest-client) repository.

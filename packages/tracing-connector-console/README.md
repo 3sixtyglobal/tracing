@@ -1,11 +1,11 @@
-# TWIN Tracing Connector Console
+# 3Sixty Tracing Connector Console
 
 Writes completed spans to the console for development visibility.
 
 ## Installation
 
 ```shell
-npm install @twin.org/tracing-connector-console
+npm install @3sixty/tracing-connector-console
 ```
 
 ## Examples
@@ -19,3 +19,7 @@ Detailed reference documentation for the API can be found in [docs/reference/ind
 ## Changelog
 
 The changes between each version can be found in [docs/changelog.md](docs/changelog.md)
+
+## Origin
+
+This package is derived from the original [iotaledger/twin-tracing](https://github.com/iotaledger/twin-tracing/tree/next/packages/tracing-connector-console) repository.

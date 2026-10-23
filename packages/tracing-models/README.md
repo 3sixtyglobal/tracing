@@ -1,11 +1,11 @@
-# TWIN Tracing Models
+# 3Sixty Tracing Models
 
 Defines shared tracing contracts, span shapes, and connector interfaces used across the repository.
 
 ## Installation
 
 ```shell
-npm install @twin.org/tracing-models
+npm install @3sixty/tracing-models
 ```
 
 ## Examples
@@ -19,3 +19,7 @@ Detailed reference documentation for the API can be found in [docs/reference/ind
 ## Changelog
 
 The changes between each version can be found in [docs/changelog.md](docs/changelog.md)
+
+## Origin
+
+This package is derived from the original [iotaledger/twin-tracing](https://github.com/iotaledger/twin-tracing/tree/next/packages/tracing-models) repository.

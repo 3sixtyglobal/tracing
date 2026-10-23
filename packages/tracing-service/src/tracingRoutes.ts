@@ -6,9 +6,9 @@ import type {
 	IRestRoute,
 	IRouteAuthorization,
 	ITag
-} from "@twin.org/api-models";
-import { Coerce, ComponentFactory, GeneralError, Guards } from "@twin.org/core";
-import { nameof } from "@twin.org/nameof";
+} from "@3sixty/api-models";
+import { Coerce, ComponentFactory, GeneralError, Guards } from "@3sixty/core";
+import { nameof } from "@3sixty/nameof";
 import type {
 	ITracingComponent,
 	ITracingGetTraceRequest,
@@ -18,8 +18,8 @@ import type {
 	ITracingSpanEndRequest,
 	ITracingSpanStartRequest,
 	ITracingSpanStartResponse
-} from "@twin.org/tracing-models";
-import { HttpStatusCode } from "@twin.org/web";
+} from "@3sixty/tracing-models";
+import { HttpStatusCode } from "@3sixty/web";
 
 /**
  * The source used when communicating about these routes.

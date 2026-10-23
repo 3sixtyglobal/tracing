@@ -1,6 +1,6 @@
 // Copyright 2026 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import { entity, property, SortDirection } from "@twin.org/entity";
+import { entity, property, SortDirection } from "@3sixty/entity";
 
 /**
  * Class defining a span event.
@@ -10,7 +10,7 @@ export class SpanEvent {
 	/**
 	 * The name of the event.
 	 */
-	@property({ type: "string" })
+	@property({ type: "string", maxLength: 256 })
 	public name!: string;
 
 	/**
