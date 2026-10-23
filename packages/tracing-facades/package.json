@@ -1,6 +1,6 @@
 {
 	"name": "@3sixty/tracing-facades",
-	"version": "0.20.0-next.0",
+	"version": "0.20.0-next.1",
 	"description": "Applies tracing to factory produced components using a facade, without modifying them.",
 	"repository": {
 		"type": "git",
@@ -31,7 +31,7 @@
 		"@3sixty/core": "next",
 		"@3sixty/logging-models": "next",
 		"@3sixty/nameof": "next",
-		"@3sixty/tracing-models": "0.20.0-next.0"
+		"@3sixty/tracing-models": "0.20.0-next.1"
 	},
 	"devDependencies": {
 		"@3sixty/context": "next",

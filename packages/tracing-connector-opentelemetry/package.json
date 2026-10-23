@@ -1,6 +1,6 @@
 {
 	"name": "@3sixty/tracing-connector-opentelemetry",
-	"version": "0.20.0-next.0",
+	"version": "0.20.0-next.1",
 	"description": "Exports spans to an OTLP compatible endpoint using OpenTelemetry for consumption by observability backends.",
 	"repository": {
 		"type": "git",
@@ -32,7 +32,7 @@
 		"@3sixty/core": "next",
 		"@3sixty/logging-models": "next",
 		"@3sixty/nameof": "next",
-		"@3sixty/tracing-models": "0.20.0-next.0",
+		"@3sixty/tracing-models": "0.20.0-next.1",
 		"@opentelemetry/api": "1.9.1",
 		"@opentelemetry/core": "2.12.0",
 		"@opentelemetry/exporter-trace-otlp-proto": "0.223.0",
