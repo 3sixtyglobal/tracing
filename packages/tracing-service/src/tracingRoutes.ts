@@ -1,6 +1,12 @@
 // Copyright 2026 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import type { IHttpRequestContext, INoContentResponse, IRestRoute, ITag } from "@3sixty/api-models";
+import type {
+	IHttpRequestContext,
+	INoContentResponse,
+	IRestRoute,
+	IRouteAuthorization,
+	ITag
+} from "@3sixty/api-models";
 import { Coerce, ComponentFactory, GeneralError, Guards } from "@3sixty/core";
 import { nameof } from "@3sixty/nameof";
 import type {
@@ -39,6 +45,20 @@ export const tagsTracing: ITag[] = [
 		description: "Endpoints which are modelled to access a tracing contract."
 	}
 ];
+
+/**
+ * The default authorization for the routes, used to seed authorization rules.
+ */
+const DEFAULT_AUTHORIZATION_READER: IRouteAuthorization = {
+	permission: "tracing:read",
+	role: "devops"
+};
+
+const DEFAULT_AUTHORIZATION_WRITER: IRouteAuthorization = {
+	permission: "tracing:write",
+	role: "devops",
+	inherits: [DEFAULT_AUTHORIZATION_READER.permission]
+};
 
 /**
  * The REST routes for tracing.
@@ -96,7 +116,8 @@ export function generateRestRoutesTracing(
 					}
 				]
 			}
-		]
+		],
+		defaultAuthorization: DEFAULT_AUTHORIZATION_WRITER
 	};
 
 	const spanEndRoute: IRestRoute<ITracingSpanEndRequest, INoContentResponse> = {
@@ -137,7 +158,8 @@ export function generateRestRoutesTracing(
 			{
 				type: nameof<INoContentResponse>()
 			}
-		]
+		],
+		defaultAuthorization: DEFAULT_AUTHORIZATION_WRITER
 	};
 
 	const listRoute: IRestRoute<ITracingListRequest, ITracingListResponse> = {
@@ -190,7 +212,8 @@ export function generateRestRoutesTracing(
 					}
 				]
 			}
-		]
+		],
+		defaultAuthorization: DEFAULT_AUTHORIZATION_READER
 	};
 
 	const getTraceRoute: IRestRoute<ITracingGetTraceRequest, ITracingGetTraceResponse> = {
@@ -242,7 +265,8 @@ export function generateRestRoutesTracing(
 					}
 				]
 			}
-		]
+		],
+		defaultAuthorization: DEFAULT_AUTHORIZATION_READER
 	};
 
 	return [spanStartRoute, spanEndRoute, listRoute, getTraceRoute];
