@@ -109,7 +109,7 @@ Wrap the target so its method calls are recorded as spans.
 
 #### Type Parameters
 
-##### T
+##### T {#t}
 
 `T`
 
