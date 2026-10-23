@@ -248,7 +248,7 @@ importers:
         specifier: next
         version: 0.20.0-next.2
       '@3sixty/tracing-models':
-        specifier: 0.20.0-next.0
+        specifier: 0.20.0-next.1
         version: link:../tracing-models
     devDependencies:
       '@3sixty/context':
@@ -327,7 +327,7 @@ importers:
         specifier: next
         version: 0.20.0-next.2
       '@3sixty/tracing-models':
-        specifier: 0.20.0-next.0
+        specifier: 0.20.0-next.1
         version: link:../tracing-models
     devDependencies:
       '@3sixty/nameof-transformer':
@@ -385,7 +385,7 @@ importers:
         specifier: next
         version: 0.20.0-next.2
       '@3sixty/tracing-models':
-        specifier: 0.20.0-next.0
+        specifier: 0.20.0-next.1
         version: link:../tracing-models
       '@opentelemetry/api':
         specifier: 1.9.1
@@ -464,7 +464,7 @@ importers:
         specifier: next
         version: 0.20.0-next.2
       '@3sixty/tracing-models':
-        specifier: 0.20.0-next.0
+        specifier: 0.20.0-next.1
         version: link:../tracing-models
     devDependencies:
       '@3sixty/context':
@@ -583,7 +583,7 @@ importers:
         specifier: next
         version: 0.20.0-next.2
       '@3sixty/tracing-models':
-        specifier: 0.20.0-next.0
+        specifier: 0.20.0-next.1
         version: link:../tracing-models
       '@3sixty/web':
         specifier: next
@@ -647,7 +647,7 @@ importers:
         specifier: next
         version: 0.20.0-next.2
       '@3sixty/tracing-models':
-        specifier: 0.20.0-next.0
+        specifier: 0.20.0-next.1
         version: link:../tracing-models
       '@3sixty/web':
         specifier: next
@@ -705,7 +705,7 @@ importers:
         specifier: next
         version: 0.20.0-next.2
       '@3sixty/tracing-models':
-        specifier: 0.20.0-next.0
+        specifier: 0.20.0-next.1
         version: link:../tracing-models
       '@3sixty/web':
         specifier: next
