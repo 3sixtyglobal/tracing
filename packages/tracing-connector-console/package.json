@@ -1,6 +1,6 @@
 {
 	"name": "@3sixty/tracing-connector-console",
-	"version": "0.20.0-next.0",
+	"version": "0.20.0-next.1",
 	"description": "Writes completed spans to the console for development visibility.",
 	"repository": {
 		"type": "git",
@@ -30,7 +30,7 @@
 	"dependencies": {
 		"@3sixty/core": "next",
 		"@3sixty/nameof": "next",
-		"@3sixty/tracing-models": "0.20.0-next.0"
+		"@3sixty/tracing-models": "0.20.0-next.1"
 	},
 	"devDependencies": {
 		"@3sixty/context": "next",

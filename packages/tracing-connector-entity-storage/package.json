@@ -1,6 +1,6 @@
 {
 	"name": "@3sixty/tracing-connector-entity-storage",
-	"version": "0.20.0-next.0",
+	"version": "0.20.0-next.1",
 	"description": "Persists spans to entity storage for durable retention, querying, and downstream processing.",
 	"repository": {
 		"type": "git",
@@ -36,7 +36,7 @@
 		"@3sixty/entity-storage-models": "next",
 		"@3sixty/logging-models": "next",
 		"@3sixty/nameof": "next",
-		"@3sixty/tracing-models": "0.20.0-next.0"
+		"@3sixty/tracing-models": "0.20.0-next.1"
 	},
 	"devDependencies": {
 		"@3sixty/nameof-transformer": "next",
