@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0.
 import type { IPlatformComponent } from "@3sixty/api-models";
 import { ContextIdKeys, ContextIdStore } from "@3sixty/context";
-import { ComponentFactory, NotFoundError } from "@3sixty/core";
+import { ComponentFactory, DurationConstants, NotFoundError } from "@3sixty/core";
 import { ComparisonOperator, LogicalOperator } from "@3sixty/entity";
 import {
 	MemoryEntityStorageConnector,
@@ -606,9 +606,14 @@ describe("EntityStorageTracingConnector", () => {
 	});
 
 	describe("retention", () => {
-		const INTERVAL_MS = 60000;
-		const TWO_HOURS_MS = 7200000;
-		const FIVE_DAYS_MS = 432000000;
+		const INTERVAL_MS = DurationConstants.MsPerMinute;
+		const TWO_SECONDS_MS = 2 * DurationConstants.MsPerSecond;
+		const THREE_SECONDS_MS = 3 * DurationConstants.MsPerSecond;
+		const FOUR_SECONDS_MS = 4 * DurationConstants.MsPerSecond;
+		const FIVE_SECONDS_MS = 5 * DurationConstants.MsPerSecond;
+		const SIX_SECONDS_MS = 6 * DurationConstants.MsPerSecond;
+		const TWO_HOURS_MS = 2 * DurationConstants.MsPerHour;
+		const FIVE_DAYS_MS = 5 * DurationConstants.MsPerDay;
 
 		let logEntries: ILogEntry[];
 		let consoleErrors: unknown[][];
@@ -692,7 +697,7 @@ describe("EntityStorageTracingConnector", () => {
 		});
 
 		test("removes spans older than retainForMs on a retention timer tick", async () => {
-			const connector = await startConnector({ retainForMs: 3600000 });
+			const connector = await startConnector({ retainForMs: DurationConstants.MsPerHour });
 			await recordSpanAt(connector, "old-1", Date.now() - TWO_HOURS_MS);
 			await recordSpanAt(connector, "old-2", Date.now() - TWO_HOURS_MS);
 			await recordSpanAt(connector, "recent", Date.now());
@@ -725,7 +730,7 @@ describe("EntityStorageTracingConnector", () => {
 		});
 
 		test("logs a retention failure rather than swallowing it", async () => {
-			await startConnector({ retainForMs: 3600000 });
+			await startConnector({ retainForMs: DurationConstants.MsPerHour });
 			vi.spyOn(storage, "count").mockRejectedValue(new Error("storage offline"));
 
 			await tick();
@@ -750,7 +755,7 @@ describe("EntityStorageTracingConnector", () => {
 				},
 				getLocalOriginContext: async () => undefined
 			}));
-			const connector = await startConnector({ retainForMs: 3600000 });
+			const connector = await startConnector({ retainForMs: DurationConstants.MsPerHour });
 
 			await tick();
 
@@ -767,7 +772,10 @@ describe("EntityStorageTracingConnector", () => {
 		});
 
 		test("deletes in pages no larger than retentionBatchSize", async () => {
-			const connector = await startConnector({ retainForMs: 3600000, retentionBatchSize: 2 });
+			const connector = await startConnector({
+				retainForMs: DurationConstants.MsPerHour,
+				retentionBatchSize: 2
+			});
 			const removeBatchSpy = vi.spyOn(storage, "removeBatch");
 			for (let i = 0; i < 5; i++) {
 				await recordSpanAt(connector, `old-${i}`, Date.now() - TWO_HOURS_MS);
@@ -780,7 +788,10 @@ describe("EntityStorageTracingConnector", () => {
 		});
 
 		test("spreads a large backlog across passes instead of deleting it in one burst", async () => {
-			const connector = await startConnector({ retainForMs: 3600000, retentionBatchSize: 1 });
+			const connector = await startConnector({
+				retainForMs: DurationConstants.MsPerHour,
+				retentionBatchSize: 1
+			});
 			const backlog = EntityStorageTracingConnector.RETENTION_MAX_BATCHES_PER_PASS + 2;
 			for (let i = 0; i < backlog; i++) {
 				await recordSpanAt(connector, `old-${i}`, Date.now() - TWO_HOURS_MS + i);
@@ -806,7 +817,7 @@ describe("EntityStorageTracingConnector", () => {
 		});
 
 		test("stop clears the retention timer so no further cleanup runs", async () => {
-			const connector = await startConnector({ retainForMs: 3600000 });
+			const connector = await startConnector({ retainForMs: DurationConstants.MsPerHour });
 			await recordSpanAt(connector, "old", Date.now() - TWO_HOURS_MS);
 
 			await connector.stop();
@@ -834,7 +845,7 @@ describe("EntityStorageTracingConnector", () => {
 				},
 				getLocalOriginContext: async () => undefined
 			}));
-			const connector = await startConnector({ retainForMs: 3600000 });
+			const connector = await startConnector({ retainForMs: DurationConstants.MsPerHour });
 
 			for (const tenant of tenants) {
 				await ContextIdStore.run({ [ContextIdKeys.Tenant]: tenant }, async () => {
@@ -859,9 +870,9 @@ describe("EntityStorageTracingConnector", () => {
 			test("count-based retention does not delete a still-open span", async () => {
 				const connector = await startConnector({ maxEntries: 2 });
 				await recordOpenSpanAt(connector, "open-oldest", Date.now() - TWO_HOURS_MS);
-				await recordSpanAt(connector, "ended-1", Date.now() - 3000);
-				await recordSpanAt(connector, "ended-2", Date.now() - 2000);
-				await recordSpanAt(connector, "ended-3", Date.now() - 1000);
+				await recordSpanAt(connector, "ended-1", Date.now() - THREE_SECONDS_MS);
+				await recordSpanAt(connector, "ended-2", Date.now() - TWO_SECONDS_MS);
+				await recordSpanAt(connector, "ended-3", Date.now() - DurationConstants.MsPerSecond);
 
 				await tick();
 
@@ -878,9 +889,9 @@ describe("EntityStorageTracingConnector", () => {
 					"open-in-progress",
 					Date.now() - TWO_HOURS_MS
 				);
-				await recordSpanAt(connector, "ended-1", Date.now() - 3000);
-				await recordSpanAt(connector, "ended-2", Date.now() - 2000);
-				await recordSpanAt(connector, "ended-3", Date.now() - 1000);
+				await recordSpanAt(connector, "ended-1", Date.now() - THREE_SECONDS_MS);
+				await recordSpanAt(connector, "ended-2", Date.now() - TWO_SECONDS_MS);
+				await recordSpanAt(connector, "ended-3", Date.now() - DurationConstants.MsPerSecond);
 
 				await tick();
 
@@ -892,7 +903,7 @@ describe("EntityStorageTracingConnector", () => {
 			});
 
 			test("age-based retention keeps an open span older than retainForMs", async () => {
-				const connector = await startConnector({ retainForMs: 3600000 });
+				const connector = await startConnector({ retainForMs: DurationConstants.MsPerHour });
 				await recordOpenSpanAt(connector, "open-long-running", Date.now() - TWO_HOURS_MS);
 				await recordSpanAt(connector, "recent-ended", Date.now());
 
@@ -902,7 +913,7 @@ describe("EntityStorageTracingConnector", () => {
 			});
 
 			test("an open span older than retainOpenForMs is reaped as abandoned", async () => {
-				const connector = await startConnector({ retainForMs: 3600000 });
+				const connector = await startConnector({ retainForMs: DurationConstants.MsPerHour });
 				await recordOpenSpanAt(connector, "abandoned", Date.now() - FIVE_DAYS_MS);
 				await recordSpanAt(connector, "recent-ended", Date.now());
 
@@ -914,7 +925,7 @@ describe("EntityStorageTracingConnector", () => {
 			test("honors a custom retainOpenForMs instead of the default", async () => {
 				// A 2h-old open span would survive the 4-day default; only a genuinely-applied
 				// custom retainOpenForMs of 1h would reap it, proving the config override is read.
-				const connector = await startConnector({ retainOpenForMs: 3600000 });
+				const connector = await startConnector({ retainOpenForMs: DurationConstants.MsPerHour });
 				await recordOpenSpanAt(
 					connector,
 					"abandoned-under-custom-cutoff",
@@ -929,8 +940,8 @@ describe("EntityStorageTracingConnector", () => {
 
 			test("keeps recent open spans within maxOpenEntries untouched", async () => {
 				const connector = await startConnector({ retainOpenForMs: 0, maxOpenEntries: 2 });
-				await recordOpenSpanAt(connector, "open-1", Date.now() - 3000);
-				await recordOpenSpanAt(connector, "open-2", Date.now() - 2000);
+				await recordOpenSpanAt(connector, "open-1", Date.now() - THREE_SECONDS_MS);
+				await recordOpenSpanAt(connector, "open-2", Date.now() - TWO_SECONDS_MS);
 
 				await tick();
 
@@ -939,9 +950,9 @@ describe("EntityStorageTracingConnector", () => {
 
 			test("trims the oldest open spans once maxOpenEntries is exceeded", async () => {
 				const connector = await startConnector({ retainOpenForMs: 0, maxOpenEntries: 2 });
-				await recordOpenSpanAt(connector, "open-oldest", Date.now() - 3000);
-				await recordOpenSpanAt(connector, "open-2", Date.now() - 2000);
-				await recordOpenSpanAt(connector, "open-3", Date.now() - 1000);
+				await recordOpenSpanAt(connector, "open-oldest", Date.now() - THREE_SECONDS_MS);
+				await recordOpenSpanAt(connector, "open-2", Date.now() - TWO_SECONDS_MS);
+				await recordOpenSpanAt(connector, "open-3", Date.now() - DurationConstants.MsPerSecond);
 
 				await tick();
 
@@ -954,12 +965,12 @@ describe("EntityStorageTracingConnector", () => {
 					maxEntries: 2,
 					maxOpenEntries: 2
 				});
-				await recordOpenSpanAt(connector, "open-oldest", Date.now() - 6000);
-				await recordOpenSpanAt(connector, "open-2", Date.now() - 5000);
-				await recordOpenSpanAt(connector, "open-3", Date.now() - 4000);
-				await recordSpanAt(connector, "ended-oldest", Date.now() - 3000);
-				await recordSpanAt(connector, "ended-2", Date.now() - 2000);
-				await recordSpanAt(connector, "ended-3", Date.now() - 1000);
+				await recordOpenSpanAt(connector, "open-oldest", Date.now() - SIX_SECONDS_MS);
+				await recordOpenSpanAt(connector, "open-2", Date.now() - FIVE_SECONDS_MS);
+				await recordOpenSpanAt(connector, "open-3", Date.now() - FOUR_SECONDS_MS);
+				await recordSpanAt(connector, "ended-oldest", Date.now() - THREE_SECONDS_MS);
+				await recordSpanAt(connector, "ended-2", Date.now() - TWO_SECONDS_MS);
+				await recordSpanAt(connector, "ended-3", Date.now() - DurationConstants.MsPerSecond);
 
 				await tick();
 

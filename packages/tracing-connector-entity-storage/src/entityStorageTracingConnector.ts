@@ -6,6 +6,7 @@ import {
 	BaseError,
 	Coerce,
 	ComponentFactory,
+	DurationConstants,
 	Guards,
 	Is,
 	JsonHelper,
@@ -58,7 +59,7 @@ export class EntityStorageTracingConnector implements ITracingConnector {
 	/**
 	 * Default interval in milliseconds between automatic flushes.
 	 */
-	public static readonly DEFAULT_BATCH_INTERVAL_MS: number = 5000;
+	public static readonly DEFAULT_BATCH_INTERVAL_MS: number = 5 * DurationConstants.MsPerSecond;
 
 	/**
 	 * Default maximum number of spans to hold in the in-memory cache.
@@ -68,7 +69,7 @@ export class EntityStorageTracingConnector implements ITracingConnector {
 	/**
 	 * Default interval in milliseconds between retention cleanup runs, 5 minutes.
 	 */
-	public static readonly DEFAULT_RETENTION_INTERVAL_MS: number = 300000;
+	public static readonly DEFAULT_RETENTION_INTERVAL_MS: number = 5 * DurationConstants.MsPerMinute;
 
 	/**
 	 * Default maximum age of an ended span before it is removed, 2 days.
