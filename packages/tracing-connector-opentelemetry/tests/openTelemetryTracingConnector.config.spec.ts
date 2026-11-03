@@ -15,6 +15,11 @@ import { TEST_OTLP_ENDPOINT_TRACES } from "./setupTestEnv.js";
 import type { IOpenTelemetryTracingConnectorConfig } from "../src/models/IOpenTelemetryTracingConnectorConfig.js";
 import { OpenTelemetryTracingConnector } from "../src/openTelemetryTracingConnector.js";
 
+vi.mock("@opentelemetry/resources", async importOriginal => {
+	const actual = await importOriginal<typeof opentelemetryResources>();
+	return { ...actual, resourceFromAttributes: vi.fn(actual.resourceFromAttributes) };
+});
+
 const SAMPLED_TRACE_ID = "0000000000000000000000000000000f";
 const UNSAMPLED_TRACE_ID = "ffffffff000000000000000000000000";
 
@@ -314,7 +319,7 @@ describe("OpenTelemetryTracingConnector configuration", () => {
 	});
 
 	test("merges the configured resource attributes over the detected ones", async () => {
-		const resourceSpy = vi.spyOn(opentelemetryResources, "resourceFromAttributes");
+		const resourceSpy = vi.mocked(opentelemetryResources.resourceFromAttributes);
 
 		const connector = await makeConnector({
 			resourceAttributes: {
