@@ -4,7 +4,6 @@
 /**
  * The types of span processor which feed the exporter.
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const OpenTelemetryProcessorTypes = {
 	/**
 	 * Buffer spans and export them in batches, this is the default.

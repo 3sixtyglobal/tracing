@@ -4,7 +4,6 @@
 /**
  * The span attribute keys recorded by the tracing facade.
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const TracingFacadeAttributes = {
 	/**
 	 * The name of the method the span covers.

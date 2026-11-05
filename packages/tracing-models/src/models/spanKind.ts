@@ -4,7 +4,6 @@
 /**
  * The kind of span, describing the role the operation plays in the overall flow.
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SpanKind = {
 	/**
 	 * A span representing pure in-process work.

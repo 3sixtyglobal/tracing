@@ -121,16 +121,16 @@ export class EntityStorageTracingConnector implements ITracingConnector {
 	private readonly _logging?: ILoggingComponent;
 
 	/**
-	 * Flush when the cache reaches this size; undefined or <= 1 disables size-based flushing.
+	 * Flush when the cache reaches this size; undefined or &lt;= 1 disables size-based flushing.
 	 * @internal
 	 */
-	private readonly _batchSize: number | undefined;
+	private readonly _batchSize?: number;
 
 	/**
-	 * Flush every this many milliseconds; undefined or <= 0 disables timer-based flushing.
+	 * Flush every this many milliseconds; undefined or &lt;= 0 disables timer-based flushing.
 	 * @internal
 	 */
-	private readonly _batchIntervalMs: number | undefined;
+	private readonly _batchIntervalMs?: number;
 
 	/**
 	 * Spans waiting to be written to storage.

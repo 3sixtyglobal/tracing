@@ -4,7 +4,6 @@
 /**
  * The context id keys used by tracing.
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const TracingContextIdKeys = {
 	/**
 	 * The id of the trace the current span belongs to, as a 16 byte hex string.

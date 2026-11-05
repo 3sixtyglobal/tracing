@@ -5,7 +5,6 @@
  * The span attribute keys which are not specific to any domain, following the OpenTelemetry
  * semantic conventions. Domain specific keys belong with the domain, alongside its metric ids.
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SpanAttributes = {
 	/**
 	 * The message of the exception which ended the span.

@@ -4,7 +4,6 @@
 /**
  * The status of a span.
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SpanStatus = {
 	/**
 	 * The span has no explicit status, this is the default.

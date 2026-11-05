@@ -185,7 +185,7 @@ export class TracingService implements ITracingComponent {
 
 	/**
 	 * Get all the spans belonging to a trace, ordered by their start time. The whole trace is paged
-	 * into memory; paging is bounded by {@link TracingService.MAX_GET_TRACE_PAGES} as a safeguard
+	 * into memory; paging is bounded by TracingService.MAX_GET_TRACE_PAGES as a safeguard
 	 * against a pathologically large trace or a non-terminating cursor.
 	 * @param traceId The id of the trace to retrieve.
 	 * @returns The spans belonging to the trace, ordered by their start time ascending.

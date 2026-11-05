@@ -6,5 +6,4 @@ import type { ITracingConnector } from "../models/ITracingConnector.js";
 /**
  * Factory for creating tracing connectors.
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const TracingConnectorFactory = Factory.createFactory<ITracingConnector>("tracing");
