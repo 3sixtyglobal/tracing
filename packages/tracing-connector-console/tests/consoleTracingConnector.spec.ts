@@ -1,4 +1,5 @@
 // Copyright 2026 IOTA Stiftung.
+// Copyright 2026 3Sixty Trade Ltd.
 // SPDX-License-Identifier: Apache-2.0.
 import { ContextIdKeys, ContextIdStore } from "@3sixty/context";
 import { SpanHelper, SpanKind, SpanStatus } from "@3sixty/tracing-models";
@@ -10,7 +11,7 @@ import { ConsoleTracingConnector } from "../src/consoleTracingConnector.js";
 
 const SUPPORTS_QUERY = false;
 
-interface StoredSpan {
+interface IStoredSpan {
 	spanId: string;
 	traceId: string;
 	parentSpanId?: string;
@@ -56,8 +57,8 @@ function capturedLines(): { text: string; isError: boolean }[] {
  * is collapsed to its last line, matching the keyed behaviour of the persisting connectors.
  * @returns The spans parsed back out of the console output.
  */
-function getStoredSpans(): StoredSpan[] {
-	const byId: { [spanId: string]: StoredSpan } = {};
+function getStoredSpans(): IStoredSpan[] {
+	const byId: { [spanId: string]: IStoredSpan } = {};
 
 	for (const line of capturedLines()) {
 		// SPAN [ts] kind name (12ms) traceId:spanId:parentSpanId {"attr":1} ...
@@ -88,7 +89,7 @@ function getStoredSpans(): StoredSpan[] {
  * @param spanId The id of the span to find.
  * @returns The span, or undefined when it was not printed.
  */
-function getStoredSpan(spanId: string): StoredSpan | undefined {
+function getStoredSpan(spanId: string): IStoredSpan | undefined {
 	return getStoredSpans().find(s => s.spanId === spanId);
 }
 

@@ -1,4 +1,5 @@
 // Copyright 2026 IOTA Stiftung.
+// Copyright 2026 3Sixty Trade Ltd.
 // SPDX-License-Identifier: Apache-2.0.
 import { ContextIdKeys, ContextIdStore } from "@3sixty/context";
 import { ComparisonOperator, LogicalOperator } from "@3sixty/entity";
@@ -16,7 +17,7 @@ import { OpenTelemetryTracingConnector } from "../src/openTelemetryTracingConnec
 
 const SUPPORTS_QUERY = false;
 
-interface StoredSpan {
+interface IStoredSpan {
 	spanId: string;
 	traceId: string;
 	parentSpanId?: string;
@@ -65,11 +66,11 @@ async function makeConnector(
 	return connector;
 }
 
-async function getStoredSpan(spanId: string): Promise<StoredSpan | undefined> {
+async function getStoredSpan(spanId: string): Promise<IStoredSpan | undefined> {
 	return (await getStoredSpans()).find(s => s.spanId === spanId);
 }
 
-async function getStoredSpans(): Promise<StoredSpan[]> {
+async function getStoredSpans(): Promise<IStoredSpan[]> {
 	return memExporter.getFinishedSpans().map(r => {
 		const events = r.events.map(e => {
 			const ev: { name: string; ts: number; attributes?: { [key: string]: unknown } } = {

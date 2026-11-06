@@ -26,7 +26,7 @@ import { initSchema } from "../src/schema.js";
 
 const SUPPORTS_QUERY = true;
 
-interface StoredSpan {
+interface IStoredSpan {
 	spanId: string;
 	traceId: string;
 	parentSpanId?: string;
@@ -91,7 +91,7 @@ function makePlatformComponent(multiTenant: boolean): IPlatformComponent {
 describe("EntityStorageTracingConnector", () => {
 	let storage: MemoryEntityStorageConnector<Span>;
 
-	async function getStoredSpans(): Promise<StoredSpan[]> {
+	async function getStoredSpans(): Promise<IStoredSpan[]> {
 		return (await storage.getStore()).map(s => ({
 			spanId: s.spanId,
 			traceId: s.traceId,
@@ -110,7 +110,7 @@ describe("EntityStorageTracingConnector", () => {
 		}));
 	}
 
-	async function getStoredSpan(spanId: string): Promise<StoredSpan | undefined> {
+	async function getStoredSpan(spanId: string): Promise<IStoredSpan | undefined> {
 		return (await getStoredSpans()).find(s => s.spanId === spanId);
 	}
 
